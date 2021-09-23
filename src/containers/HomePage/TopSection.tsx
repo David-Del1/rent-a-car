@@ -5,6 +5,7 @@ import tw from 'twin.macro';
 import MclarenImg from '../../assets/images/mclaren-orange-big.png';
 import blob from '../../assets/images/blob.svg';
 import { SCREENS } from '../../app/components/responsive';
+import Button from '../../app/components/Button';
 
 const TopSectionContainer = styled.div`
 min-height: 600px;
@@ -134,6 +135,12 @@ const CarContainer = styled.div`
     right: -13em;
     top: -9em;
   }
+`;
+
+const ButtonsContainer = styled.div`
+  ${tw`
+    flex
+  `}
 `
 
 function TopSection() {
@@ -144,6 +151,10 @@ function TopSection() {
             <Description>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus nemo optio error explicabo, odit eius ex numquam. Officia, quasi beatae!
             </Description>
+            <ButtonsContainer>
+              <Button theme='filled' text="Book Your Ride" />
+              <Button theme='outlined' text="Sell Your Car" />
+            </ButtonsContainer>
           </LeftContainer>
 
           <RightContainer>

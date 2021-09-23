@@ -9,9 +9,7 @@ interface IButtonProps {
 
 const BaseButton = styled.button`
   ${tw`
-    pl-5
-    pr-5
-    pt-3
+    p-3
     outline-none
     rounded-md
     text-white
@@ -29,11 +27,9 @@ const BaseButton = styled.button`
 `;
 
 const OutlinedButton = styled(BaseButton)`
+
   ${tw`
     bg-red-500
-    hover:bg-transparent
-    hover:text-red-500
-    hover:border-red-500
   `}
 `;
 
@@ -42,19 +38,23 @@ const FilledButton = styled(BaseButton)`
     border-red-500
     text-red-500
     bg-transparent
-    hover:bg-red-500
-    hover:text-white
-    hover:border-transparent
-    
   `}
 `;
 
 function Button(props: IButtonProps) {
-  return (
-    <div>
-      
-    </div>
-  );
-}
+
+  const { theme, text } = props;
+
+  if(theme === "outlined")
+    return (
+      <FilledButton>
+        {text}
+      </FilledButton>
+    );
+  else {
+    return <OutlinedButton>
+      {text}
+    </OutlinedButton>
+}}
 
 export default Button
