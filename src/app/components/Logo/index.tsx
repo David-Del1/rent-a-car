@@ -5,6 +5,7 @@ import tw from 'twin.macro';
 import CarLogoImg from '../../../assets/images/car-logo.png';
 
 const LogoContainer = styled.div`
+padding-left: 10px;
   ${tw`
     flex
     items-center
