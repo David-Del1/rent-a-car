@@ -41,7 +41,7 @@ function Logo() {
         <img src={CarLogoImg} alt="" />
       </Image>
       <LogoText>
-        Coché.
+        Coche.
       </LogoText>
     </LogoContainer>
   )
