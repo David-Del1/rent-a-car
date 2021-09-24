@@ -6,6 +6,7 @@ import { Marginer } from '../../app/components/Margin';
 import NavBar from '../../app/components/NavBar';
 import AboutUs from './AboutUs';
 import BookingSteps from './BookingSteps';
+import TopCars from './TopCars';
 import TopSection from './TopSection';
 
 const PageContainer = styled.div`
@@ -29,5 +30,7 @@ export function HomePage() {
     <BookingSteps />
     <Marginer direction="vertical" margin="5em" />
     <AboutUs />
+    <Marginer direction="vertical" margin="5em" />
+    <TopCars />
   </PageContainer>
 }
