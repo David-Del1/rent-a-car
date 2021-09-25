@@ -1,4 +1,4 @@
-import { faEllipsisH, faFillDrip, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faEllipsisH, faFillDrip, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ interface ICarProps extends ICar {}
 const CarContainer = styled.div`
   width: 16.5em;
   min-height: 22.2em;
-  max-height: 25.2em;
+  max-height: 23.2em;
   box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.5);
   ${tw `
     flex
@@ -59,6 +59,7 @@ const CarThumbnail = styled.div`
  const SmallText = styled.p`
   color: inherit;
   ${tw`
+    inline-flex
     text-xs
     font-light
   `}
@@ -122,6 +123,7 @@ const CarThumbnail = styled.div`
  `;
 
  const RentButton = styled(Button)`
+
   ${tw `
     min-w-full
     mt-5
@@ -157,7 +159,7 @@ function Car(props: ICarProps) {
         </CarDetails>
         <CarDetails>
           <SmallIcon>
-            <FontAwesomeIcon icon={faEllipsisH} />
+            <FontAwesomeIcon icon={faCog} />
           </SmallIcon>
           <CarInfo> {gearType} </CarInfo>
         </CarDetails>
