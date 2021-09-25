@@ -2,10 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
-import CarLogoImg from '../../../assets/images/car-logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCar } from '@fortawesome/free-solid-svg-icons';
+
+interface ILogoProps {
+  color?: "white" | "dark"
+} 
 
 const LogoContainer = styled.div`
-padding-left: 10px;
   ${tw`
     flex
     items-center
@@ -19,29 +23,35 @@ const LogoText = styled.div`
     font-bold
     text-black
     m-1
-  `}
-`;
+    `}
+    ${({ color }: any) => (color === "white" ?tw`text-white` : tw`text-black`)}
+` as any;
 
 const Image = styled.div`
 
   width: auto;
   ${tw`
-    h-6 md:h-9
+    h-6 
+    md:h-9
   `}
-  img {
-    width: auto;
-    height: 100%;
+  svg {
+    font-size: 2rem;
+    color: #ec3838;
   }
 `
 
-function Logo() {
+function Logo(props: ILogoProps) {
+  const { color } = props;
+
   return (
     <LogoContainer>
       <Image>
-        <img src={CarLogoImg} alt="" />
+        <FontAwesomeIcon 
+          icon={faCar}
+        />
       </Image>
-      <LogoText>
-        Coche.
+      <LogoText color={color || "dark"}>
+        Coche
       </LogoText>
     </LogoContainer>
   )

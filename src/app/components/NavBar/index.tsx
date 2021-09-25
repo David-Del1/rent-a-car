@@ -18,9 +18,7 @@ const NavBarContainer = styled.div`
   `}
 `;
 
-const LogoContainer = styled.div`
-
-`
+const LogoContainer = styled.div``
 
 function NavBar() {
   return (
