@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import Car from '../../app/components/Car';
@@ -7,6 +7,13 @@ import Carousel, { Dots, slidesToShowPlugin } from "@brainhubeu/react-carousel";
 import '@brainhubeu/react-carousel/lib/style.css';
 import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../app/components/responsive';
+import carService from '../../app/services/carService';
+import { Dispatch } from 'redux';
+import { GetCars_cars } from '../../app/services/carService/__generated__/GetCars';
+import { setTopCars } from './slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+import { makeSelectTopCars } from './selectors';
 
 const TopCarsContainer = styled.div`
   ${tw `
@@ -44,11 +51,42 @@ const CarsContainer = styled.div`
   `}
 `;
 
+const EmptyCars = styled.div`
+  ${tw `
+    w-full
+    flex
+    justify-center
+    items-center
+    text-sm
+    text-gray-500
+  `}
+`
 
+  const actionDispatch = (dispatch: Dispatch) => ({
+    setTopCars: (cars: GetCars_cars[]) => dispatch(setTopCars(cars))
+  });
+
+  const stateSelector = createSelector(makeSelectTopCars, topCars => ({
+    topCars
+  }))
 
 function TopCars() {
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(0);
+
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
+
+  const { topCars } = useSelector(stateSelector);
+  const { setTopCars } = actionDispatch(useDispatch());
+
+  const fetchTopCars = async () => {
+    const cars = await carService.getCars()
+      .catch(err => {
+        console.error("Error:", err.message);
+      });
+
+    console.log("Cars: ", cars);
+    if(cars) setTopCars(cars);
+  }
 
   const testCar: ICar = {
     name: "Audi S3 Car",
@@ -69,20 +107,24 @@ function TopCars() {
     gearType: "Auto",
     gas: "Petrol",
   };
-  const cars = [ 
-    <Car {...testCar} />, 
-    <Car {...testCar2} />,
-    <Car {...testCar} />,
-    <Car {...testCar2} />,
-    <Car {...testCar} />,
-  ];
+
+  useEffect(() => {
+    fetchTopCars();
+  }, []);
+
+  const isEmptyTopCars = !topCars || topCars.length === 0;
+
+  const cars = !isEmptyTopCars && topCars.map(car => <Car {...car} thumbnailSrc={car.thumbnailUrl} />) || [];
 
   const numOfDots = isMobile ? cars.length : Math.ceil(cars.length / 3);
+
+  if(isEmptyTopCars) return null;
 
   return (
     <TopCarsContainer>
       <Title>Explore Our Models</Title>
-      <CarsContainer>
+      {isEmptyTopCars && <EmptyCars>No Cars to Show!</EmptyCars>}
+      {!isEmptyTopCars && <CarsContainer>
         <Carousel 
           value={current} 
           onChange={setCurrent} 
@@ -120,7 +162,7 @@ function TopCars() {
           }}
         />
         <Dots value={current} onChange={setCurrent} number={numOfDots} />
-      </CarsContainer>
+      </CarsContainer>}
     </TopCarsContainer>
   );
 }
