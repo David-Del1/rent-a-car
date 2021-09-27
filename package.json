@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.3.19",
     "@brainhubeu/react-carousel": "^2.0.4",
     "@craco/craco": "^6.3.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -21,6 +22,7 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-responsive": "^8.0.3",
     "@types/styled-components": "^5.1.14",
+    "graphql": "^15.5.0",
     "react": "^17.0.2",
     "react-burger-menu": "^3.0.6",
     "react-calendar": "^3.4.0",
@@ -36,7 +38,10 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "schema:download": "apollo service:download --endpoint=http://localhost:8000/graphql ./src/app/graphql-schema.json",
+    "schema:generate-watch": "apollo codegen:generate --localSchemaFile=./src/app/graphql-schema.json --target=typescript --tagName=gql --watch",
+    "start:prod": "node ./server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,7 +59,9 @@
     ]
   },
   "devDependencies": {
+    "@apollo/rover": "^0.3.0",
     "@types/brainhubeu__react-carousel": "^2.0.4",
+    "apollo": "^2.33.6",
     "autoprefixer": "^9",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
