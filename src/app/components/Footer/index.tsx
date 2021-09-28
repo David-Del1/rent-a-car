@@ -189,19 +189,19 @@ function Footer() {
           <HeaderTitle>Other Links</HeaderTitle>
           <LinksList>
             <ListItem>
-              <a href="#">FAQ</a>
+              <a href="/">FAQ</a>
             </ListItem>
             <ListItem>
-              <a href="#">Contact Us</a>
+              <a href="/">Contact Us</a>
             </ListItem>
             <ListItem>
-              <a href="#">Support</a>
+              <a href="/">Support</a>
             </ListItem>
             <ListItem>
-              <a href="#">Privacy Policy</a>
+              <a href="/">Privacy Policy</a>
             </ListItem>
             <ListItem>
-              <a href="#">Terms &amp; Conditions</a>
+              <a href="/">Terms &amp; Conditions</a>
             </ListItem>
           </LinksList>
         </SectionContainer>

@@ -1,4 +1,4 @@
-import { faCog, faEllipsisH, faFillDrip, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faFillDrip, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import styled from 'styled-components';
