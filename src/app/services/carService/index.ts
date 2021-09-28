@@ -14,8 +14,7 @@ class CarService {
       if(res && res.data && res.data.cars) return res.data.cars as GetCars_cars[];
 
       return [];
-  }
-
+  } 
 }
 
 export default new CarService();

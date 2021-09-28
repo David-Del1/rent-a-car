@@ -14,6 +14,7 @@ import { setTopCars } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import { makeSelectTopCars } from './selectors';
+import BeatLoader from "react-spinners/BeatLoader";
 
 const TopCarsContainer = styled.div`
   ${tw `
@@ -60,7 +61,20 @@ const EmptyCars = styled.div`
     text-sm
     text-gray-500
   `}
-`
+`;
+
+const LoadingContainer = styled.div`
+  ${tw `
+    w-full
+    mt-9
+    flex
+    justify-center
+    items-center
+    text-base
+    text-black
+  `}
+`;
+
 
   const actionDispatch = (dispatch: Dispatch) => ({
     setTopCars: (cars: GetCars_cars[]) => dispatch(setTopCars(cars))
@@ -68,10 +82,13 @@ const EmptyCars = styled.div`
 
   const stateSelector = createSelector(makeSelectTopCars, topCars => ({
     topCars
-  }))
+  }));
+
+  const wait = (timeout: number) => new Promise(rs => setTimeout(rs, timeout))
 
 function TopCars() {
   const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
 
@@ -79,13 +96,17 @@ function TopCars() {
   const { setTopCars } = actionDispatch(useDispatch());
 
   const fetchTopCars = async () => {
+    setLoading(true)
     const cars = await carService.getCars()
       .catch(err => {
         console.error("Error:", err.message);
       });
 
+      await wait(5000);
+
     console.log("Cars: ", cars);
     if(cars) setTopCars(cars);
+    setLoading(false);
   }
 
   const testCar: ICar = {
@@ -123,8 +144,12 @@ function TopCars() {
   return (
     <TopCarsContainer>
       <Title>Explore Our Models</Title>
-      {isEmptyTopCars && <EmptyCars>No Cars to Show!</EmptyCars>}
-      {!isEmptyTopCars && <CarsContainer>
+      {loading && (<LoadingContainer>
+        <BeatLoader loading size={20} />
+      </LoadingContainer>)}
+      {isEmptyTopCars && !loading && <EmptyCars>No Cars to Show!</EmptyCars>}
+      {!isEmptyTopCars && !loading && (
+      <CarsContainer>
         <Carousel 
           value={current} 
           onChange={setCurrent} 
@@ -162,7 +187,9 @@ function TopCars() {
           }}
         />
         <Dots value={current} onChange={setCurrent} number={numOfDots} />
-      </CarsContainer>}
+      </CarsContainer>
+      )
+      }
     </TopCarsContainer>
   );
 }
